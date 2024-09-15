@@ -9,7 +9,7 @@ import os
 
 from checkio_client.settings import conf
 from checkio_client.api import get_mission_info, check_solution,\
-    restore, run_solution
+    restore, run_solution, get_mission_slug
 from checkio_client.utils.code import code_for_check, solutions_paths, parse_env_line
 from checkio_client.actions.sync import sync_single_mission
 from checkio_client.actions.init import main as main_init
@@ -34,7 +34,7 @@ def get_filename(args, print_filename=True):
     if 'solutions' not in default_data:
         raise ValueError('Solutions folder is not defined')
 
-    mission = args.mission[0].replace('_', '-')
+    mission = get_mission_slug(args.mission[0])
     try:
         filename = solutions_paths()[mission]
     except KeyError:
@@ -70,7 +70,7 @@ def main_check_cio(args):
             conf.set_default_domain(cur_domain)
 
     else:
-        mission = args.mission[0].replace('_', '-')
+        mission = get_mission_slug(args.mission[0])
         filename = get_filename(args, print_filename=False)
 
     domain_data = conf.default_domain_data
@@ -147,7 +147,7 @@ def main_check_cio(args):
 def main_check_eoc_local(args):
     from checkio_client.eoc.testing import execute_referee
     filename = get_filename(args)
-    mission = args.mission[0].replace('_', '-')
+    mission = get_mission_slug(args.mission[0])
 
     if args.recompile:
         from checkio_client.eoc.getters import recompile_mission
@@ -243,7 +243,7 @@ def main_run_cio(args):
             conf.set_default_domain(cur_domain)
 
     else:
-        mission = args.mission[0].replace('_', '-')
+        mission = get_mission_slug(args.mission[0])
         filename = get_filename_init(args)
 
     domain_data = conf.default_domain_data
@@ -298,7 +298,7 @@ def eoc_get_extra_volume(args):
 def main_run_eoc_local(args):
     from checkio_client.eoc.testing import execute_referee
     filename = get_filename(args)
-    mission = args.mission[0].replace('_', '-')
+    mission = get_mission_slug(args.mission[0])
 
     logging.info('Using: ' + filename)
     

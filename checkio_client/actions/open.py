@@ -4,6 +4,7 @@ import sys
 
 from checkio_client.settings import conf
 from .check import get_filename_init
+from ..api import get_mission_slug
 
 def exec_command(args):
     logging.info('Open: %s', ' '.join(args))
@@ -21,7 +22,7 @@ def main(args):
         exec_command([domain_data['editor'], domain_data['solutions']])
         return
 
-    setattr(args, 'mission', [args.mission.replace('_', '-')])
+    setattr(args, 'mission', [get_mission_slug(args.mission)])
     filename = get_filename_init(args)
     exec_command([domain_data['editor'], filename])
 

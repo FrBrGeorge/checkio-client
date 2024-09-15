@@ -79,6 +79,9 @@ def get_server_time():
 def get_mission_info(mission_slug):
     return api_request('/api/tasks/' + mission_slug + '/')
 
+def get_mission_slug(mission_string):
+    return mission_string.lower().replace('_', '-').replace(' ', '-')
+
 def info_eoc_to_cio(m):
     return {
         'stationName': m['type'],

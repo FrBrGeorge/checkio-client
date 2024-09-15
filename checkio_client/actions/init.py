@@ -1,4 +1,4 @@
-from checkio_client.api import get_mission_info
+from checkio_client.api import get_mission_info, get_mission_slug
 from checkio_client.utils.code import code_for_file, init_code_file, gen_filename
 from checkio_client.settings import conf
 
@@ -13,7 +13,7 @@ def main(args):
     if not args.out:
         print('Requesting...')
 
-    mission = args.mission[0].replace('_', '-')
+    mission = get_mission_slug(args.mission[0])
     data = get_mission_info(mission)
 
     code = data['code']
