@@ -197,10 +197,7 @@ def apply_main_args(args=None):
 
 def main():
     # because of calling inside of #!/usr/bin/
-    if platform.system() == 'Windows':
-        call_args = sys.argv[1:]
-    else:
-        call_args = sum(map(lambda a: shlex.split(a), sys.argv[1:]), [])
+    call_args = sys.argv[1:]
     args = parser.parse_args(call_args)
 
     logging.basicConfig(level=LEVELS[args.verbose])
